@@ -130,10 +130,12 @@ bool moveKnight(int row, int col, int move) {
 			system("pause");
 		}
 	}
+	else {
 	//Resetting space to 0 if no valid move is available
 	badMoves++;
 	board[row][col] = 0;
 	return false;
+	}
 }
 
 
