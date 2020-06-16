@@ -1,7 +1,4 @@
 ////
-// Author:       Amanda GT
-// Section:      S
-// Assignment:   P5 - Knight's Tour
 // Description:  This program is designed to solve the famous Knight's Tour 
 // problem, where the "Knight" of the chess board game is challenged to make 
 // a series of moved that occupy every space on the chess board at least once
