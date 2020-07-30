@@ -1,4 +1,7 @@
 ////
+// Author:       Amanda Todakonzie
+// Section:      S
+// Assignment:   P5 - Knight's Tour
 // Description:  This program is designed to solve the famous Knight's Tour 
 // problem, where the "Knight" of the chess board game is challenged to make 
 // a series of moved that occupy every space on the chess board at least once
@@ -14,8 +17,8 @@ using namespace std;
 
 
 //Constants
-const int ROW = 5;
-const int COL = 5;
+const int ROW = 8;
+const int COL = 8;
 
 //Global Variables
 int moveCount = 0;
@@ -33,21 +36,20 @@ int main() {
 	//Setting up Knight to start at 0,0)
 	int row = 0;
 	int col = 0;
-	int moveNum = 1;
+	int moveNum = 0;
 
 	//Intro
 	cout << "\n***Welcome to my Knight's Tour Program***\n";
 	cout << "The Knight will start moving from: [" << row << "] [" << col << "]";
 
-
 	setupBoard();
 	cout << "\n\n - Board set up complete - ";
-	cout << "\n - Tour initiated - ";
-	moveKnight(row, col, moveNum);
+	cout << "\n - Tour initiated - \n";
+	printBoard();
 
-	if (moveKnight(row, col, moveNum) == true) {
+	if (moveKnight(7, 0, 1) == true) {
 		cout << "\n - Tour completed sucessfullly! - ";
-		cout << "Total moves: " << moveCount << endl;
+		cout << "\nAfter " << moveCount << " tries and " << badMoves << " bad moves." << endl;
 		printBoard();
 		cout << endl;
 	}
@@ -55,7 +57,7 @@ int main() {
 	return 0;
 }
 
-//Function Definitions
+
 void setupBoard() {
 	for (int i = 0; i < ROW; i++) {
 		for (int j = 0; j < COL; j++) {
@@ -67,75 +69,60 @@ void setupBoard() {
 
 bool moveKnight(int row, int col, int move) {
 
-	if (move == (ROW * COL)) {
-		return true; // terminate condition
-	}
+	if (row > -1 && row < ROW && col > -1 && col < COL && board[row][col] == 0) {
+		board[row][col] = move;
+		moveCount++;
 
-	if ((row > -1) && (row < ROW) && (col > -1) && (col < COL) && (board[row][col] == 0)) {
-
-		// 1 MOVE (+1)(+2)
-		if (moveKnight(row + 1, col + 2, move)) {
-			moveCount++;
-			board[row][col] = move;
+		if (moveCount % 10000000 == 0) {
 			printBoard();
-			system("pause");
+			cout << "Move count: " << moveCount << " Bad moves: " << badMoves << endl;
 		}
-		// 2 MOVE (+1)(-2)
-		if (moveKnight(row + 1, col - 2, move)) {
-			moveCount++;
-			board[row][col] = move;
-			printBoard();
-			system("pause");
-		}
-		// 3 MOVE (-1)(+2)
-		if (moveKnight(row - 1, col + 2, move)) {
-			moveCount++;
-			board[row][col] = move;
-			printBoard();
-			system("pause");
-		}
-		// 4 MOVE(-1)(-2)
-		if (moveKnight(row - 1, col - 2, move)) {
-			moveCount++;
-			board[row][col] = move;
-			printBoard();
-			system("pause");
-		}
-		// 5 MOVE(-2)(+1)
-		if (moveKnight(row - 2, col + 1, move)) {
-			moveCount++;
-			board[row][col] = move;
-			printBoard();
-			system("pause");
-		}
-		// 6 MOVE(-2)(-1)
-		if (moveKnight(row - 2, col - 1, move)) {
-			moveCount++;
-			board[row][col] = move;
-			printBoard();
-			system("pause");
-		}
-		// 7 MOVE(+2)(+1)
-		if (moveKnight(row + 2, col + 1, move)) {
-			moveCount++;
-			board[row][col] = move;
-			printBoard();
-			system("pause");
-		}
-		// 8 MOVE(+2)(-1)
-		if (moveKnight(row + 2, col - 1, move)) {
-			moveCount++;
-			board[row][col] = move;
-			printBoard();
-			system("pause");
-		}
+		
 	}
 	else {
-	//Resetting space to 0 if no valid move is available
+		
+		return false;
+	}
+
+	if (move == (ROW * COL)) {
+		return true;
+	}
+		// 1 MOVE (+1)(+2)
+	if (moveKnight(row - 1, col + 2, move + 1)) {
+		return true;
+	}
+		// 2 MOVE (+1)(-2)
+	if (moveKnight(row + 1, col - 2, move + 1)) {
+		return true;
+	}
+		// 3 MOVE (-1)(+2)
+	if (moveKnight(row + 1, col + 2, move + 1)) {
+		return true;
+	}
+		// 4 MOVE(-1)(-2)
+	if (moveKnight(row - 1, col - 2, move + 1)) {
+		return true;
+	}
+		// 5 MOVE(-2)(+1)
+	if (moveKnight(row - 2, col + 1, move + 1)) {
+		return true;
+	}
+		// 6 MOVE(-2)(-1)
+	if (moveKnight(row - 2, col - 1, move + 1)) {
+		return true;
+	}
+		// 7 MOVE(+2)(+1)
+	if (moveKnight(row + 2, col + 1, move + 1)) {
+		return true;
+	}
+		// 8 MOVE(+2)(-1)
+	if (moveKnight(row + 2, col - 1, move + 1)) {
+		return true;
+	}	
+
 	badMoves++;
 	board[row][col] = 0;
 	return false;
-	}
 }
 
 
